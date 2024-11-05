@@ -1,5 +1,7 @@
 #include "Rush_Hour.h"
 #include "ReadAndPrint.h"
+#include "BFS.h"
+#include "AStar.h"
 
 int main() {
     int level;
@@ -64,11 +66,17 @@ int main() {
             
             break;
         case 2:
-            for(int i = 0; i < 6; i++) {
+            for(int i = 0; i < 1; i++) {
                 level = i + 1;
                 cout << endl << WHITE << "─────────┤Nivel N" << level << "├─────────" << endl;
                 LoadLevelsInfo(GS,"Data/Levels.txt", level);
                 PrintBoard(GS);
+                cout<<"---------------------------------"<<endl;
+                cout<<"BFS..."<<endl;
+                BFS(GS);
+                cout<<"---------------------------------"<<endl;
+                cout<<"Astar..."<<endl;
+                AStar(GS);
                 cout<<"---------------------------------"<<endl;
             }
             break;

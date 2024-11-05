@@ -26,7 +26,7 @@ void LoadLevelsInfo(GameState& gameState, const string& archivo, int level) {
                     gameState.player = stoull(token, nullptr, 16);
                 }
 
-                // Obtén la información para el miembro obstacles
+                // Obtén la información para el miembro obstaculo
                 if(ActualLine%5 == 3) {
                     getline(iss, token);
                     gameState.obstacles = stoull(token, nullptr, 16);
