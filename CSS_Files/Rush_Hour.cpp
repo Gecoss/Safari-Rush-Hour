@@ -19,9 +19,11 @@ string DetectOrientation(bitboard& board){
 
     bitboard aux = board & -board;
 
-    if(((aux >> 1) & board) || ((aux << 1) & board)) { return "Horizontal"; }
-    else if(((aux >> 6) & board) || ((aux << 6) & board)) { return "Vertical"; }
-
+    
+    if(((aux >> 6) & board) || ((aux << 6) & board)) { return "Vertical"; }
+    //else if(((aux >> 1) & board) || ((aux << 1) & board)) { return "Horizontal"; }
+    else if(((aux >> 1) & board) || ((aux << 1) & board)||((aux >> 6) & board) || ((aux << 6) & board)) { return "Todas"; }
+    
     return "Error al detectar orientación";
 }
 
@@ -36,9 +38,14 @@ vector<bitboard> GetDirections(GameState& gs, bitboard board) {
     } else if (orientation == "Vertical") {
         vecinoArriba = (board & ~firstRow) << 6;
         vecinoAbajo = (board & ~lastRow) >> 6;
+    } else if (orientation == "Todas") {
+        vecinoDerecha = (board & ~lastCol) >> 1;
+        vecinoIzquierda = (board & ~firstCol) << 1;
+        vecinoArriba = (board & ~firstRow) << 6;
+        vecinoAbajo = (board & ~lastRow) >> 6;
     }
 
-    bitboard blockedCells = GetCarsAsBitboard(gs) | GetTrucksAsBitboard(gs) | gs.obstacles | gs.player;
+    bitboard blockedCells = GetCarsAsBitboard(gs) | GetTrucksAsBitboard(gs) | gs.player;
     bitboard directions = (vecinoDerecha | vecinoIzquierda | vecinoArriba | vecinoAbajo) & ~(blockedCells);
     vector<bitboard> bb_neighbors;
 
@@ -54,10 +61,10 @@ vector<bitboard> GetDirections(GameState& gs, bitboard board) {
     return bb_neighbors;
 }
 
-//Expande las direcciones de la fichae para saber los vecinos de toda la fila/columna
+//Expande las direcciones de la ficha para saber los vecinos de toda la fila/columna
 vector<vector<bitboard>> ExpandDirections(GameState& gs, bitboard board) {
     
-    bitboard blockedCells = GetCarsAsBitboard(gs) | GetTrucksAsBitboard(gs) | gs.obstacles | gs.player;
+    bitboard blockedCells = GetCarsAsBitboard(gs) | GetTrucksAsBitboard(gs) | gs.player;
     vector<bitboard> auxVector = GetDirections(gs, board);
     vector<bitboard> bb_neighbors1;
     vector<bitboard> bb_neighbors2;

@@ -66,7 +66,7 @@ int main() {
             
             break;
         case 2:
-            for(int i = 0; i < 1; i++) {
+            for(int i = 0; i < 6; i++) {
                 level = i + 1;
                 cout << endl << WHITE << "─────────┤Nivel N" << level << "├─────────" << endl;
                 LoadLevelsInfo(GS,"Data/Levels.txt", level);

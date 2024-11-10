@@ -29,7 +29,11 @@ void BFS(GameState& initial) {
                 path.push_back(current);
                 current = parent[current];
             }
-
+            for(int i = path.size()-1; i >= 0 ; i--)
+            {
+                PrintBoard(path[i]);
+            }
+            
             cout << WHITE << "     ¡Juego finalizado!" << endl;
             PrintStats(totalNodes, path.size(), static_cast<double>(totalTime), timePerNode);
             

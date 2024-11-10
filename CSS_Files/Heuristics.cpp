@@ -46,6 +46,5 @@ double Heuristic( GameState& state) {
 
     // Calcular el costo estimado restante considerando solo los obstáculos en la misma fila
     double estimatedCost = obstaclesCount;
-    //cout << "Valor de la heuristica: " << estimatedCost << endl;
     return estimatedCost;
 }

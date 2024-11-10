@@ -20,7 +20,6 @@ static const bitboard finalPlayerState = 0x0000c00000000000;
 struct GameState {   
     //Tablero
     bitboard player = 0x0;
-    bitboard obstacles = 0x0;
     vector<bitboard> cars ={};
     vector<bitboard> trucks ={};
 
@@ -29,7 +28,6 @@ struct GameState {
     GameState(const GameState& other) {
         // Copiar los miembros de datos de other a *this
         player = other.player;
-        obstacles = other.obstacles;
         cars = other.cars;
         trucks = other.trucks;
         // ...
@@ -40,7 +38,6 @@ struct GameState {
         
             // Copiar los miembros de datos de other a *this
             player = other.player;
-            obstacles = other.obstacles;
             cars = other.cars;
             trucks = other.trucks;
             // ...
@@ -51,7 +48,6 @@ struct GameState {
     bool operator==(const GameState& other) const {
         // Comparar todos los miembros para determinar la igualdad
         return player == other.player &&
-               obstacles == other.obstacles &&
                cars == other.cars &&
                trucks == other.trucks;
     }
@@ -83,8 +79,6 @@ struct GameStateHash {
         std::size_t hash = 0;
         // Hash del miembro player
         hash_combine(hash, std::hash<bitboard>{}(gsHash.player));
-        // Hash del miembro obstacles
-        hash_combine(hash, std::hash<bitboard>{}(gsHash.obstacles));
         // Hash de los vectores cars y trucks
         for (const auto& car : gsHash.cars)
             hash_combine(hash, std::hash<bitboard>{}(car));

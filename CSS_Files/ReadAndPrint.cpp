@@ -26,14 +26,8 @@ void LoadLevelsInfo(GameState& gameState, const string& archivo, int level) {
                     gameState.player = stoull(token, nullptr, 16);
                 }
 
-                // Obtén la información para el miembro obstaculo
-                if(ActualLine%5 == 3) {
-                    getline(iss, token);
-                    gameState.obstacles = stoull(token, nullptr, 16);
-                }
-
                 // Obtén la información para el miembro cars
-                if(ActualLine%5 == 4) {
+                if(ActualLine%5 == 3) {
                     getline(iss, token);
                     istringstream carsIss(token);
                     bitboard car;
@@ -42,7 +36,7 @@ void LoadLevelsInfo(GameState& gameState, const string& archivo, int level) {
                 }
 
                 // Obtén la información para el miembro trucks
-                if(ActualLine%5 == 0) {
+                if(ActualLine%5 == 4) {
                     getline(iss, token);
                     istringstream trucksIss(token);
                     bitboard truck;
@@ -80,18 +74,17 @@ void PrintBoard(GameState& gs) {
         if(i % 6 == 0) board <<"   "<< LIGHT_BROWN << "║ ";
        
         if(one&gs.player) board << RED << "███";                                                    //Auto jugador color rojo
-        if(one&gs.obstacles) board << YELLOW << "███";                                              //Objetos del mapa
         for(auto car : gs.cars)                                                                     //Auto Azul de dos casillas
             if(one&car) {
                 int pos = find(gs.cars.begin(), gs.cars.end(), car) - gs.cars.begin() + 1;
                 board << BLUE_BACKGROUND << BLUE << "█"  << WHITE << pos << BLUE << "█" << RESET; 
-            }                                                
+            }                                               
         for(auto truck : gs.trucks)                                                                 //Camion Verde de tres casillas
             if(one&truck) { 
                 int pos = find(gs.trucks.begin(), gs.trucks.end(), truck) - gs.trucks.begin() + 1;
                 board << GREEN_BACKGROUND << GREEN << "█"  << WHITE << pos << GREEN << "█" << RESET; 
             }                         
-        if(one&~(gs.player | gs.obstacles | GetCarsAsBitboard(gs) | GetTrucksAsBitboard(gs))) board << GREY <<"░░░"; //Casilla vacia
+        if(one&~(gs.player | GetCarsAsBitboard(gs) | GetTrucksAsBitboard(gs))) board << GREY <<"░░░"; //Casilla vacia
         
         if(i % 6 == 5) board << LIGHT_BROWN << " ║" << endl;
 
